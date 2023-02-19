@@ -12,7 +12,7 @@ html, body {
 body, #root {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;	
 }
 
@@ -31,6 +31,10 @@ body {
 body::-webkit-scrollbar {
 	scrollbar-color: none;
   scrollbar-width: 10px;
+}
+
+.NavLink:hover > span {
+	width: 100%;
 }
 
 
