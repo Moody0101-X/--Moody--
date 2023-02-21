@@ -1,6 +1,6 @@
 // 0607343642 => MohcinSnack.
 import {useState, useEffect} from "react";
-import { ProductCard, FilterProdByQuery, FilterProdByPriceVal, OnMaxPrice, OnMinPrice } from "../Components/Product"
+import { ProductsSection, ProductCard, FilterProdByQuery, FilterProdByPriceVal, OnMaxPrice, OnMinPrice } from "../Components/Product"
 
 let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 const generateLabel = (length) => {
@@ -14,11 +14,10 @@ const generateLabel = (length) => {
 	return r;
 }
 
-const Latest = () => {
+const LatestProducts = () => {
 	const [products, setProducts] = useState([]);
-
-	const GetProducts = (n) => {
-		
+	
+	const GetProducts = (n) => {	
 		let tmp = [];
 		
 
@@ -48,19 +47,8 @@ const Latest = () => {
 
 	}, []);
 
-	return (
-		<>
-			<div className="flex items-center justify-between w-[90%] text-lg font-semibold my-2 p-2 border-b border-b-slate-100 text-slate-800"> 
-				<h1>
-					Latest products
-				</h1>
-			</div>
-			<ul className="w-full flex items-center justify-center flex-row flex-wrap">
-				{ (products.length > 0) ? (products.map(v => <ProductCard label={v.get("label")} price={v.get("price")} desc={v.get("desc")}/>)) : (<h1> Loading... </h1>) }
-			</ul>
-		</>
-	)
+	return <ProductsSection Products={products} Title="Latest shit" />
 }
 
-const Store = () => <Latest />;
+const Store = () => <LatestProducts />;
 export default Store;

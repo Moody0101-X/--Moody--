@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	// "net/http"
 	"github.com/gin-gonic/gin"
 	"moody.com/api/models"
@@ -10,6 +11,7 @@ import (
 
 
 /*
+
 Priority Queue.
 
 	[*] SignUp
@@ -23,7 +25,9 @@ Priority Queue.
 */
 
 func Login(c *gin.Context) {
+	
 	/*
+		route: /User/Auth/Login
 		Expects => {
 			"email": string
 			"pwd": string
@@ -34,50 +38,85 @@ func Login(c *gin.Context) {
 			Desc 	string
 			Code    int
 	*/
+
 	var AuthUser models.User;
 	
-	c.bindJSON(&AuthUser)
+	c.BindJSON(&AuthUser)
 	
 	Result := database.AuthenticateUser(&AuthUser);
 
 	if Result.Ok {
-		c.JSON(Result.Code, AuthUser);
+		c.JSON(OK, models.MakeServerResp(OK, AuthUser));
 		return
 	}
 
-	c.JSON(Result.Code, Result.Desc);
+	c.JSON(OK, models.MakeServerRespFromResult(Result));
+	
 }
 
 
 func SingUp(c *gin.Context) {
+	
 	/*
+		route: /User/Auth/SignUp
 		Expects => {
 			"email": string
 			"pwd": string
 			"name": string
 			"phone_number": string
 		}
-			Ok 	 	bool
-			Desc 	string
-			Code    int
+		
+		Ok 	 	bool
+		Desc 	string
+		Code    int
 	*/
 
 	var New models.User;
-
-	c.bindJSON(&New);
 	
+	c.BindJSON(&New);
+	
+	fmt.Println("--Sign-up--");
 	Result := database.SignUpAUser(&New);
 	
 	if Result.Ok {
-		c.JSON(Result.Code, New);
+		c.JSON(OK, models.MakeServerResp(OK, New));
 		return
 	}
 
-	c.JSON(Result.Code, Result.Desc);
+	c.JSON(OK, models.MakeServerRespFromResult(Result));
 }
 
 func AddNewProductRoute(c *gin.Context) {
-	NOTIMPLEMENTED(c, "/Product/Add");
+
+	/*
+		route: /Product/Add
+		
+		Expects => {
+			"img": string
+			"owner_id": fk => int
+			"label": string
+			"price": int
+			"vendor": string
+			"jwt": string
+		}
+		
+		Ok 	 	bool
+		Desc 	string
+		Code    int
+	*/
+
+	var P models.Product;
+	c.BindJSON(&P);
+
+	Result := database.AddNewProduct(&P);
+
+	if Result.Ok {
+		c.JSON(OK, models.MakeServerResp(OK, P));
+		return
+	}
+
+
+	c.JSON(OK, models.MakeServerRespFromResult(Result));
 }
 
 func RemoveProductRoute(c *gin.Context) {

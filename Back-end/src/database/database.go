@@ -8,17 +8,15 @@ import (
 	// "strings"
 )
 
-// struct DB type {
-// 	sync.RWMutex
-// 	DATABASE *sql.DB
-// }
-
 var DATABASE *sql.DB
 
-// db initializer: Opens the db, then evluates a global conn variable.
+func GetDb() *sql.DB {
+	return DATABASE;
+}
 
-func InitializeDb(dbPath string) (error, string) {
-	var err error
+// db initializer: Opens the db, then evluates a global conn variable.
+func InitializeDb(dbPath string) (error, string) {	
+	var err error;
 
 	DATABASE, err = sql.Open("sqlite3", dbPath); if err != nil {
 		return err, ""

@@ -2,6 +2,8 @@
 import { UIWrapper } from "../Components/Wrapper";
 import { useEffect, useState } from "react";
 import { ProductCard, FilterProdByQuery, FilterProdByPriceVal, OnMaxPrice, OnMinPrice } from "../Components/Product"
+import { Link, useNavigate } from "react-router-dom";
+
 let FuncMap = {
 	'Array': (s) => s.map,
 	'Map': (s) => s.keys().map,
@@ -37,8 +39,11 @@ const Stator = (initial) => {
 	return [State, SetState, Clear]
 }
 
-
-import { Link, useNavigate } from "react-router-dom";
+const GenericInputField = ({ OnTyping, ...Rest }) => {
+	return (
+		<input {...Rest} onChange={OnTyping} type="text" placeholder="Look for Something!" className="w-[500px] outline-none transition-all ease-in-out focus:shadow rounded-md border-2 border-green-500 p-4 bg-slate-50 my-4" />
+	)
+}
 
 const Home = () => {
 	const [query, setQuery] = useState("");
@@ -52,16 +57,20 @@ const Home = () => {
 		<UIWrapper Class="h-[90vh]">
 
 			<div className="h-full w-full flex flex-col justify-center items-center">
-				<h1 className="my-2 text-[50px] font-semibold"> Find High Quality Product! </h1>
+				<h1 className="my-2 text-[50px] text-center font-semibold"> Find High Quality Product! </h1>
 				<p className="text-2xl font-normal text-slate-600"> With the best prices possible. </p>
-				<input onChange={OnTyping} type="text" placeholder="Look for Something!" className="w-[500px] outline-none transition-all ease-in-out focus:shadow rounded-md border-2 border-green-500 p-4 bg-slate-50 my-4" />
+				<GenericInputField OnTyping={OnTyping} />
+				
 				<div className="">
 					<button className="mx-2 border border-neutral-800 transition-all ease-in-out hover:bg-neutral-900 bg-neutral-800 text-white rounded-md p-4"> Search </button>
 					
-				<Link className="mx-2 bg-none border text-black hover:text-white hover:bg-green-500 border-green-500 transition-all ease-in-out text-white rounded-md p-4" to="/Store">
-					Browse Our Catalogue
-				</Link>
+					<Link className="mx-2 bg-none border text-black hover:text-white hover:bg-green-500 border-green-500 transition-all ease-in-out text-white rounded-md p-4" to="/Store">
+						Browse Our Catalogue
+					</Link>
+					
 				</div>
+				<p className="underline mt-8 text-slate-600 cursor-pointer"> For a more persistent experience, you can sign up for an account! </p>	
+			
 			</div>
 
 		</UIWrapper>

@@ -8,9 +8,10 @@ import (
 )
 
 type Product struct {
-	Id			  		int           `json:"id"`
+	Id			  		int         `json:"id"`
 	Img			  		string	    `json:"img"`
-	Owner_id			int          `json:"owner_id"`
+	Owner_id			int         `json:"owner_id"`
+	Token			    string		`json:"jwt"`
 	ProductLabel  		string 	    `json:"label"`
 	ProductPrice  		string 	    `json:"price"`
 	Desc		  		string 	    `json:"desc"`
@@ -51,7 +52,6 @@ func (P *Product) FetchProductById(DBConn *sql.DB) bool {
 
 
 func (P *Product) InsertToDatabase(DBConn *sql.DB) (error) {
-	
 	stmt, err := DBConn.Prepare("INSERT INTO PRODUCTS(IMG, OWNER_ID, PRODUCTLABEL, PRODUCTPRICE, DESC, CREATEDAT, VENDOR) VALUES(?, ?, ?, datetime(), ?)");
 	
 	if err != nil {
@@ -67,9 +67,6 @@ func (P *Product) InsertToDatabase(DBConn *sql.DB) (error) {
 	return nil;
 }
 
-
-
-
 /*
 
 	check the balance of the buyyer. (  )
@@ -82,5 +79,5 @@ func (P *Product) InsertToDatabase(DBConn *sql.DB) (error) {
 	this is the whole operation which is a bit clumsy but we can try other ways and locks etcetra....
 
 */
-
-func (P *Product) BuyProduct(B *Buyyer, S *Seller) bool {  return nil }
+ 
+func (P *Product) BuyProduct(B *Buyer, S *Seller) bool {  return true }

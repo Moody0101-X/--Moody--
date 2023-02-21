@@ -1,11 +1,15 @@
 
-import { useEffect, useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
 
 const Profile = () => {
-	return <h1> Profile </h1>
+	const User = useSelector(state => state.User);
+	const Dispatch = useDispatch();
+
+	return (
+		<h1> Profile Page. </h1>
+	)
+
 }
 
 
-
-export default Profile;
+export { Profile };

@@ -15,6 +15,7 @@ import (
 var JWT_SECRET_KEY []byte = []byte("21656756270094038278781082827545")
 
 func HashPwd(s string) string {
+    
     hash_ := sha256.New()
     hash_.Write([]byte(s))
     return hex.EncodeToString(hash_.Sum(nil))

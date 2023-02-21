@@ -4,7 +4,7 @@ var API;
 if(location.port === SPORT) {
 	API = `/v2` // Production
 } else {
-	API = `http://${location.host}:${SPORT}/v2`; // DEV
+	API = `http://${location.hostname}:${SPORT}`; // DEV
 }
 
 export {

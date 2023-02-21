@@ -2,8 +2,8 @@ from socket import gethostbyname, gethostname
 from flask import Flask, request, send_file
 
 from database import (
-    GetProductImageFromCDN
-	SaveProductImageToCDN
+    GetProductImageFromCDN,
+	SaveProductImageToCDN,
 	makeResponse
 )
 
@@ -35,7 +35,7 @@ def GetProductImage(fileName):
     return makeResponse(500, "server could not find config file.")
 
 if __name__ == '__main__':
-    app.run(host=HOST, port=PORT, debug=True)
+    app.run(host="localhost", port=PORT, debug=True)
 
 
 

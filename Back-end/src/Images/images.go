@@ -8,7 +8,7 @@ import (
     // "net/url"
     "encoding/json"
     "bytes"
-    "strings"
+    // "strings"
 )
 
 var AddImageRoute = "/products/img/add";

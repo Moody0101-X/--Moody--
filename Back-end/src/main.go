@@ -6,7 +6,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"moody.com/api/database"
 	"moody.com/api/routes"
-	"log"
+	// "log"
 )
 
 /*
@@ -26,23 +26,24 @@ import (
 			}
 */
 
-func RequestCancelRecover() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		defer func() {
-			
-			if err := recover(); err != nil {
-				fmt.Println("The Request was cancelled because an unexpected error interupted.")
-				fmt.Println("err:\n")
-				log.Fatal(err);
-				
-				c.Request.Context().Done()
-			}
-
-		}()
+// func RequestCancelRecover() gin.HandlerFunc {
+// 	return func(c *gin.Context) {
 		
-		c.Next()
-	}	
-}
+// 		defer func() {
+
+// 			if err := recover(); err != nil {
+			
+// 				fmt.Println("The Request was cancelled because an unexpected error interupted.")
+// 				fmt.Println("err:\n")
+// 				log.Fatal(err);
+// 				c.Request.Context().Done()
+// 			}
+
+// 		}()
+		
+// 		c.Next()
+// 	}	
+// }
 
 func run() {
 	// GET THE PORT :)
@@ -52,7 +53,7 @@ func run() {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.Use(cors.Default())	
-	router.Use(gin.Logger(), RequestCancelRecover())
+	// router.Use(gin.Logger(), RequestCancelRecover())
 	// HTML/JS/CSS/IMG loaders
 
 	// router.Static("/static", "./public/static")
@@ -62,10 +63,17 @@ func run() {
 	// router.Static("/", "./public")
 	
 	router.GET("/", routes.Index)
+	router.GET("/Products", routes.GetAllProductsRoute)
     router.NoRoute(routes.Index)
-    
+
+	router.POST("/User/Auth/Login", routes.Login)
+	router.POST("/User/Auth/SignUp", routes.SingUp)
+	router.POST("/Product/Add", routes.AddNewProductRoute)
+	
 	// running the server.
+	
 	fmt.Println("[!] Serving in port -> ", PORT)
+	
 	// fmt.Println("[!] Using cdn ->", CDN)
 	// fmt.Println("[!] Go to this link to review the app: ", APP_LINK)
 	fmt.Println()
@@ -81,7 +89,7 @@ func main() {
     
     // fmt.Println("[!] Environement ->", env)
 
-    var DB string = "./Moody.db"
+    var DB string = "./db/Moody.db"
     
     err, path := database.InitializeDb(DB);
 

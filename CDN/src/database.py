@@ -6,11 +6,12 @@ from hashlib import sha256
 from dataclasses import dataclass
 from os import environ, path
 
-if "CDN" in environ:
-    CDN = environ["CDN"]
 
-    if path.exists(CDN): print(' * DATA CLUSTER -> ', CDN)
-    assert CDN, "Could not find the cdn, check if it is assigned in the env vars."
+CDN = "./CLUSTER"
+
+if path.exists(CDN): print(' * DATA CLUSTER -> ', CDN)
+
+assert CDN, "Could not find the cdn, check if it is assigned in the env vars."
 
 @dataclass
 class Response:
@@ -37,17 +38,13 @@ def Unpack(IMime, id_) -> tuple:
     
     return Bytes, f"{FileName}.{Extention}"
 
-
 def SaveProductImageToCDN(data: dict) -> dict:
     
     MIME, ID = data["mime"], data["id"]
     if isinstance(ID, int): ID = str(ID)
-    Upath = Path(CDN) / ID
-    
-    if not Upath.exists(): Upath.mkdir()
     
     Bytes, FName = Unpack(MIME, ID)
-    ImagePath = Upath / FName
+    ImagePath = Path(CDN) / FName
 
     with open(ImagePath, "wb") as fp:
         fp.write(Bytes)
